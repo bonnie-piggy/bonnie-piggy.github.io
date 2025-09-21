@@ -19,5 +19,34 @@ identity.
 Handmade web pages flourished in the mid-to-late-1990s, in the brief period after the academic
 web and before the corporate web. ‘Handmade’ is by no means the only or best term to define
 the web of this period.</h2>
+    <div class="scroll-progress">
+        <div class="scroll-progress-bar" id="scrollProgressBar"></div>
+    </div>
+
+    <div class="content">
+
+    </div>
+
+    <script>
+        // 获取进度条元素
+        const scrollProgressBar = document.getElementById('scrollProgressBar');
+        
+        // 更新进度条函数
+        function updateScrollProgress() {
+            // 计算滚动百分比
+            const windowHeight = window.innerHeight;
+            const documentHeight = document.documentElement.scrollHeight - windowHeight;
+            const scrollPercentage = (window.scrollY / documentHeight) * 100;
+            
+            // 更新进度条宽度
+            scrollProgressBar.style.width = scrollPercentage + '%';
+        }
+        
+        // 添加滚动事件监听器
+        window.addEventListener('scroll', updateScrollProgress);
+        
+        // 初始调用一次以正确初始化
+        updateScrollProgress();
+    </script>
     </body>
 </html>
