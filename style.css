@@ -7,21 +7,32 @@
 body {
 	background-color: #467095;
 }
-p {
+.content {
 	color: #b2b7b6;
 	font-weight: 400;
 	font-size: 30px;
 	line-height: 40px;
 	text-align: center;
-	position: absolute;
-	top: 120%;
-	left: 50%;
-	transform: translate(-50%, -50%);
+	position: static;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 20%;
 	width: 50%;
-	padding: 1px 16px;
+	padding: 0px 16px 200px 16px;
 	border-radius: 8px;
-	z-index: 10000;
+	z-index: 0;
 }
+
+.footer {
+	z-index: 10000;
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	width: 1000px;
+	padding: 30px 40px;
+	background: none;
+}
+
 h1{
 	color: #9fc824;
 	font-weight: 700;
@@ -35,7 +46,7 @@ h1{
 	width: 50%;
 	padding: 10px 16px;
 	border-radius: 8px;
-	z-index: 10000;
+	z-index: -1;
 }
 .navigation  {
 	position: fixed;
