@@ -6,6 +6,7 @@
         <title></title><!--declaring the title, or name, of the HTML document. displayed in the browser's title bar-->
         <meta name="description" content=""><!--keywords/snippet for search engines-->
         <meta name="viewport" content="width=device-width"><!--the browser will (probably) render the width of the page at the width of its own screen -->
+        <link rel="stylesheet" href="style.css"><!--linking an external CSS file to the HTML document-->
     </head>
     <body><!--all the contents of an HTML document goes here-->
         <h2>The term 'handmade' usually refers to objects made by hand or by using simple tools rather
@@ -19,34 +20,17 @@ identity.
 Handmade web pages flourished in the mid-to-late-1990s, in the brief period after the academic
 web and before the corporate web. ‘Handmade’ is by no means the only or best term to define
 the web of this period.</h2>
-    <div class="scroll-progress">
-        <div class="scroll-progress-bar" id="scrollProgressBar"></div>
-    </div>
-
-    <div class="content">
-
-    </div>
-
-    <script>
-        // 获取进度条元素
-        const scrollProgressBar = document.getElementById('scrollProgressBar');
-        
-        // 更新进度条函数
-        function updateScrollProgress() {
-            // 计算滚动百分比
-            const windowHeight = window.innerHeight;
-            const documentHeight = document.documentElement.scrollHeight - windowHeight;
-            const scrollPercentage = (window.scrollY / documentHeight) * 100;
-            
-            // 更新进度条宽度
-            scrollProgressBar.style.width = scrollPercentage + '%';
-        }
-        
-        // 添加滚动事件监听器
-        window.addEventListener('scroll', updateScrollProgress);
-        
-        // 初始调用一次以正确初始化
-        updateScrollProgress();
-    </script>
+        <p>-- from http://handmadeweb.org/</p>
+        <a href="index.html">home</a>
+        <a href="html2.html">chapter2</a>
+        <a href="html3.html">chapter3</a>
+        <a href="html4.html">chapter4</a>
     </body>
+ <style>
+h2 {
+margin-left: 20vw;
+margin-right: 20vw;
+font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+font-weight: 200;}
+ </style>
 </html>

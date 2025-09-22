@@ -1,0 +1,67 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: 'Georgia', serif;
+}
+
+/* 悬浮进度条容器 */
+.progress-box {
+	position: fixed;
+	top: 200px;
+	right: 20px;
+	width: 0px;
+	background: #fff;
+	border: 1px solid #ccc;
+	border-radius: 8px;
+	box-shadow: 0 2px 8px rgba(85, 85, 85, 0.928);
+	z-index: 9999;
+	padding: 16px;
+}
+
+/* 进度条本体 */
+.progress-bar-bg {
+	width: 100%;
+	height: 12px;
+	background: #06b00f;
+	border-radius: 6px;
+	overflow: hidden;
+	margin-top: 8px;
+}
+
+.progress-bar-fill {
+	height: 100%;
+	width: 0%;
+	background: linear-gradient(90deg, #4caf50, #81c784);
+	border-radius: 6px;
+	transition: width 0.3s;
+}
+p {
+	color: green;
+	font-weight: 600;
+	font-style: inherit;
+	font-size: 70px;
+	line-height: 20px;
+	letter-spacing: 2px;
+	text-align: center;
+}
+a {
+	color: green;
+}
+a:hover { /* link on hover */
+	color: rgba(0, 128, 0, 0.681);
+}
+a:visited {
+	color: rgb(255, 234, 0);
+}
+a:active {
+	color: rgb(255, 0, 0);
+}
+a:link {
+	color: rgb(0, 75, 128);
+}
+
+:first-child
+:nth-child(2)
+:before
+:after
