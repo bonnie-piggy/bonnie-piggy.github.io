@@ -7,13 +7,13 @@
 body {
 	background-color: #467095;
 }
-h {
+p {
 	color: #b2b7b6;
 	font-weight: 400;
 	font-family: "Lucida Console", Monaco, monospace;
 	font-size: 30px;
 	line-height: 40px;
-	letter-spacing: 0.1px;
+	letter-spacing: normal;
 	text-align: start;
 	position: -webkit-sticky;
 	top: 30%;
@@ -69,7 +69,3 @@ a:link {
 	border-radius: 6px;
 	transition: width 0.3s;
 }
-:first-child
-:nth-child(2)
-:before
-:after
