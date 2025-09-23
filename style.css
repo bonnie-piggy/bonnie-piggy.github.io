@@ -12,6 +12,7 @@ body {
 	background-color: #467095;
 	font-weight: 400;
 	font-size: 30px;
+	text-shadow: #24394c 1px 1px 2px;
 	line-height: 40px;
 	text-align: center;
 	position: static;
@@ -27,13 +28,20 @@ p{
 	margin-top: 40px;
 }
 .footer {
+	text-shadow: #151d25 0.5px 1px 1px;
 	z-index: 10000;
+	color: #e6bf16;
 	position: fixed;
 	left: 0;
 	bottom: 0;
 	width: 1000px;
-	padding: 30px 40px;
+	padding: 70px 130px;
 	background: none;
+}
+
+.footer a:visited,
+.footer a:link {
+	text-decoration: none;
 }
 
 h1{
@@ -43,71 +51,58 @@ h1{
 	line-height: 50px;
 	text-align: left;
 	position: fixed;
-	top: 30%;
+	top: 25%;
 	left: 50%;
 	transform: translate(-50%, -50%);
 	width: 50%;
 	padding: 10px 16px;
 	border-radius: 8px;
+
 	z-index: -1;
 }
 .navigation  {
 	position: fixed;
 	top: 20px;
-	right: 20px;
-	background: #f9f9f9;
+	right:40px;
+	background: #b2b7b6;
 	padding: 10px 10px;
 	border-radius: 8px;
 	box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 	z-index: 10000;
 	opacity: 0;
 	transition: opacity 0.3s;
+	line-height: 2;
+}
+.navigation-mobile  {
+	text-shadow: #151d25 1px 1px 2px;
+	font-size: 50px;
+	position: fixed;
+	top: 115px;
+	right: 70px;
+	color:#b2b7b6;
 }
 .navigation:hover {
 	opacity: 1;
 }
+.handmade {
+	position: fixed;
+	left: 5%;
+	bottom: 35%;
+	background: #d6dcda;
+	padding: 10px 16px;
+	border-radius: 3px;
+	box-shadow: 0 1px 6px #151d25ca;
+	font-size: 14px;
+	line-height: 1.5;
+	z-index: 10000;
+	color: #005800ad;
+}
 a {
 	color: green;
 }
-a:hover {
-	color: rgba(0, 128, 0, 0.68);
-}
 a:visited {
-	color: #ffea00;
-}
-a:active {
-	color: #ff0000;
+	color: #005800ad;
 }
 a:link {
-	color: #004b80;
-}
-/* 悬浮进度条容器 */
-.progress-box {
-	position: fixed;
-	top: 200px;
-	right: 20px;
-	background: #46709a;
-	border: 1px solid #ccc;
-	border-radius: 8px;
-	box-shadow: 0 2px 8px rgba(85, 85, 85, 0.93);
-	z-index: 9999;
-	padding: 16px;
-}
-
-/* 进度条本体 */
-.progress-bar-bg {
-	width: 100%;
-	height: 12px;
-	background: #06b00f;
-	border-radius: 6px;
-	overflow: hidden;
-	margin-top: 8px;
-}
-
-.progress-bar-fill {
-	height: 100%;
-	width: 0%;
-	background: linear-gradient(90deg, #4caf50, #81c784);
-	border-radius: 6px;
-	transition: width 0.3s;
+	color: #005800ad;
 }

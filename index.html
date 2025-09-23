@@ -1,26 +1,64 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>EXERCISE-3-Bonnie</title>
-        <meta name="description" content="handmade-website"><!--keywords/snippet for search engines-->
-        <meta name="viewport" content="width=device-width"><!--the browser will (probably) render the width of the page at the width of its own screen -->
-    </head>
-<body>
-    <p><strong>A Handmade Web</strong></p>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>EXERCISE-3-Bonnie</title>
+    <meta name="description" content="handmade-website">
+    <meta name="viewport" content="width=device-width">
+    <style>
+        body {
+            background-color: #467095;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            line-height: 1.5;
+            color: #9fc824;
+            font-size: 30px;
+        }
+        .progress-box {
+            width: 80%;
+            margin: 20px auto;
+            background: #eee;
+            border-radius: 10px;
+            padding: 10px;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: #ccc;
+            border-radius: 10px;
+            position: relative;
+        }
+        .progress-bar-fill {
+            width: 50%;
+            height: 100%;
+            background: #9fc824;
+            border-radius: 10px;
+        }
+    </style>
+    <style>
+        .centered-text {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            margin: 0;
+            font-size: 50px;
+            color: #9fc824;
+            background: transparent;
+            z-index: 10;
+            text-shadow: #151d25 1px 1px 2px;
+        }
+    </style>
+    <p class="centered-text">A Handmade Web</p>
     <div class="progress-box">
         <div class="progress-bar">
             <div class="progress-bar-fill"></div>
         </div>
-    <a href="html1.html">chapter1</a>
-    <a href="https://htmlpreview.github.io/?https://github.com/bonnie-piggy/bonnie-piggy.github.io/blob/main/html2.html">chapter2</a>
-    <a href="https://htmlpreview.github.io/?https://github.com/bonnie-piggy/bonnie-piggy.github.io/blob/main/html3.html">chapter3</a>
-    <a href="https://htmlpreview.github.io/?https://github.com/bonnie-piggy/bonnie-piggy.github.io/blob/main/html4.html">chapter4</a>
-    <style>
-        body {
-            line-height: 10;
-        }
-    </style>
-    </body>
+    </div>
+    <a href="html1.html" style="color: #f2d42c;">chapter1</a><br>
+    <a href="html2.html" style="color: #f2d42c;">chapter2</a><br>
+    <a href="html3.html" style="color: #f2d42c;">chapter3</a><br>
+    <a href="html4.html" style="color: #f2d42c;">chapter4</a>
+</body>
 </html>
