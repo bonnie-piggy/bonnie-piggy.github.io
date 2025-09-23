@@ -9,6 +9,7 @@ body {
 }
 .content {
 	color: #b2b7b6;
+	background-color: #467095;
 	font-weight: 400;
 	font-size: 30px;
 	line-height: 40px;
@@ -22,7 +23,9 @@ body {
 	border-radius: 8px;
 	z-index: 0;
 }
-
+p{
+	margin-top: 40px;
+}
 .footer {
 	z-index: 10000;
 	position: fixed;
