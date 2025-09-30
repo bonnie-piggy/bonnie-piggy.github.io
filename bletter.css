@@ -1,3 +1,11 @@
+:root { --page-offset-x: 250px; }
+
+html, body { margin:0; padding:0; }
+
+body {
+    transform: translateX(var(--page-offset-x));
+    will-change: transform;
+}
 /* 主题色 */
 :root {
     --wrapper1-color: #ffffff;

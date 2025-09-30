@@ -7,16 +7,58 @@
      <meta name="description" content=""><!--keywords/snippet for search engines-->
     <meta name="viewport" content="width=device-width"><!--the browser will (probably) render the width of the page at the width of its own screen -->
     <link rel="stylesheet" href="style.css">
+        <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<style>
+/* Horizontal scrollbar styles */
+.scrollbar-horizontal {
+    width: 50vw;
+    height: 20px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 1000;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    background: transparent;
+}
+
+/* Hide default scrollbar for the container */
+.scrollbar-horizontal::-webkit-scrollbar {
+    height: 20px;
+    width: 0;
+}
+
+/* Track */
+.scrollbar-horizontal::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey;
+    border-radius: 10px;
+}
+
+/* Handle */
+.scrollbar-horizontal::-webkit-scrollbar-thumb {
+    background: rgb(67, 203, 14);
+    border-radius: 10px;
+}
+
+/* Handle on hover */
+.scrollbar-horizontal::-webkit-scrollbar-thumb:hover {
+    background: #12d42c;
+}
+</style>
+<div class="scrollbar-horizontal">
+    <div style="width:200vw;height:1px;"></div></div>
 </head>
-    <body><!--all the contents of an HTML document goes here-->
+    <body><!--all the contents of an HTML docum
+</div>ent goes here-->
         <h1><i>Chapter 1</i></h1>
         <div class="content">
-            <p>The term 'handmade' usually refers to objects made by hand or by using simple tools rather
+            <p>The term ‘Handmade’ usually refers to objects made by hand or by using simple tools rather
             than machines. The result may be homely — as in a child's clay ashtray — or exquisite — as in
             a pair of bespoke brogues.<br>
             </p>
             <p>
-            I evoke the term 'handmade web' to refer to web pages coded by hand rather than by
+            I evoke the term ‘handmade web’ to refer to web pages coded by hand rather than by
             software; web pages made and maintained by individuals rather than by businesses or
             corporations; web pages which are provisional, temporary, or one-of-a-kind; web pages
             which challenge conventions of reading, writing, design, ownership, privacy, security, or

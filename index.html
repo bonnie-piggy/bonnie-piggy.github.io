@@ -1,17 +1,40 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title>EXERCISE-3-Bonnie</title>
     <meta name="description" content="handmade-website">
-    <meta name="viewport" content="width=device-width">
+<style>
+/* width */
+::-webkit-scrollbar {
+  width: 20px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey; 
+  border-radius: 10px;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: red; 
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #b30000; 
+}
+</style>
     <style>
         body {
             background-color: #467095;
-            font-family: Arial, sans-serif;
+            font-family: 'Times New Roman', Times, serif;
             text-align: center;
-            line-height: 1.5;
+            line-height: 2;
             color: #9fc824;
             font-size: 30px;
         }
@@ -22,7 +45,7 @@
             top: 50%;
             left: 30px;
             transform: translateY(-50%);
-            background: #f2d42ca0;
+            background: #ceb736;
             border-radius: 12px;
             padding: 10px 0;
             display: flex;
@@ -42,7 +65,7 @@
         .progress-bar-fill {
             width: 100%;
             height: 50%;
-            background: #9fc824;
+            background: #82a223;
             border-radius: 12px 12px 0 0;
             transition: height 0.3s;
         }
@@ -55,7 +78,7 @@
             transform: translate(-50%, -50%);
             margin: 0;
             font-size: 50px;
-            color: #9fc824;
+            color: #9fc727;
             background: transparent;
             z-index: 10;
             text-shadow: #151d25 1px 1px 2px;
@@ -68,11 +91,11 @@
         </div>
     </div>
     <div class="side-links">
-        <p style="color: #f2d42ce7;">START<br>👇</p>
-        <a href="html1.html" style="color: #f2d42ce7;">chapter1</a><br>
-        <a href="html2.html" style="color: #f2d42ce7;">chapter2</a><br>
-        <a href="html3.html" style="color: #f2d42ce7;">chapter3</a><br>
-        <a href="html4.html" style="color: #f2d42ce7;">chapter4</a>
+        <p style="color: #f6d029e7;">START<br>👇</p>
+        <a href="html1.html" style="color: #f6d029e7;">chapter1</a><br>
+        <a href="html2.html" style="color: #f6d029e7;">chapter2</a><br>
+        <a href="html3.html" style="color: #f6d029e7;">chapter3</a><br>
+        <a href="html4.html" style="color: #f6d029e7;">chapter4</a>
     </div>
     <style>
         .side-links {
@@ -86,5 +109,8 @@
             line-height: 2;
         }
     </style>
+    <footer style="position: fixed; top: 0; left: 0; width: 100%; background: #2d2d2d; color: #e0e0e0a1; text-align: center; padding: 8px 0 12px 0; font-size: 12px; letter-spacing: 2px; box-shadow: 0 -2px 12px #151d25a0; z-index: 100;">
+        Bonnie Web-Medium-Exercise3
+    </footer>
 </body>
 </html>
