@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function () {
   //------------------------------------
   const darkModeButton = document.getElementById('darkmode');
   darkModeButton.addEventListener('click', function() {
-    document.body.classList.toggle('darkmode');
+    document.body.classList.toggle('dark');
   });
 
 });
@@ -46,6 +46,10 @@ document.addEventListener("DOMContentLoaded", function () {
   const moon = document.getElementById('moon');
   const sun = document.getElementById('sun');
   const skyBtn = document.getElementById('sky-btn'); // add a button with id="sky-btn"
+  const darkModeButton = document.getElementById('darkmode');
+  darkModeButton.addEventListener('click', function() {
+    document.body.classList.toggle('darkmode');
+  });
 
   if (moon && sun) {
     // Start with clear sky
