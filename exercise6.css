@@ -1,9 +1,8 @@
-#sky-btn{
+.sky{
     position: absolute;
+    width: 100%;
     left: 50%; top: 15%;
-    z-index: 100;
-  }
-
+}
 
 .moon{
     display: block;
@@ -33,16 +32,14 @@
   width: 220px; height: 220px;
   opacity: 0.3;
 }
-
-#darkmode {
-	position: absolute;
-  left:50%; top: 7%;
-}
-
-body.dark {
+body.darkmode {
 	background: black;
 	color: white;
-  	/*	redefine a CSS variable */
+
+	/*	redefine a CSS variable */
 	--accent-color: rgb(0,255,0);
 }
 
+body.darkmode button{
+	color: white;
+}

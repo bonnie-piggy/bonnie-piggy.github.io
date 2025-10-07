@@ -1,11 +1,3 @@
-:root { --page-offset-x: 250px; }
-
-html, body { margin:0; padding:0; }
-
-body {
-    transform: translateX(var(--page-offset-x));
-    will-change: transform;
-}
 /* 主题色 */
 :root {
     --wrapper1-color: #ffffff;
@@ -517,13 +509,11 @@ div {
     background: #a3583d;
     border: 4px double #f3865f;
     border-radius: 10%;
-    rotate: 30deg;
     box-shadow: 0 0 6px rgba(0,0,0,.25);
 }
 .point:hover {
     transform: scale(1.25);
     transition: .25s;
-    transform: rotate(-30deg);
 }
 div {
     display: block;
