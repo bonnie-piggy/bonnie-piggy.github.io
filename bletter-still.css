@@ -1,0 +1,630 @@
+/* 主题色 */
+:root {
+    --wrapper1-color: #ffffff;
+    --wrapper2-color: #47da1b;
+    --wrapper3-color: #ffffff;
+}
+
+.wrapper1
+{top:30px;
+left:20px;
+}
+
+/* wrapper1公共外观 */
+.par1,
+.par2,
+.par3,
+.par4,
+.vert1,
+.vert2,
+.vert3{
+    border-radius: 50px;
+    box-sizing: border-box;
+    flex-direction: row;
+    gap: 12px;
+    justify-content: flex-start;
+    overflow: hidden;
+}
+
+.vert1 {
+    border-radius: 12px;
+    box-sizing: border-box;
+    flex-direction: column;
+    gap: 12px;
+    justify-content: flex-start;
+    overflow: hidden;
+}
+
+/* 竖向长方形 */
+.vert1 {
+    position: absolute;
+    top: 40px;
+    left: 40px;
+    width: 85px;
+    height: 500px;
+    background: var(--wrapper1-color);
+}
+.vert2 {
+    position: absolute;
+    top: 50px;
+    left: 310px;
+    width:  50px;
+    height: 225px;
+    background: var(--wrapper1-color);
+}
+.vert3 {
+    position: absolute;
+    top: 240px;
+    left: 335px;
+    width:  50px;
+    height: 290px;
+    background: var(--wrapper1-color);
+}
+
+/* 横向长方形 */
+.par1 {
+    position: absolute;
+    top: 40px;
+    left: 60px;
+    width: 300px;
+    height: 60px;
+    background: var(--wrapper1-color);
+}
+.par2 {
+    position: absolute;
+    top: 240px;
+    left: 60px;
+    width: 280px;
+    height: 20px;
+        background: var(--wrapper1-color);
+}
+.par3 {
+    position: absolute;
+    top: 270px;
+    left: 60px;
+    width: 300px;
+    height: 20px;
+    background: var(--wrapper1-color);
+}
+.par4 {
+    position: absolute;
+    top: 480px;
+    left: 60px;
+    width: 325px;
+    height: 60px;
+    background: var(--wrapper1-color);
+}
+/* wrapper2公共外观 */
+.circle1,  
+.circle2,
+.circle3 {
+    border-radius: 16px;
+    background: var(--wrapper2-color);
+}
+
+/* 圆形 */
+.circle1 {
+    position: absolute;
+    top: 1700px;
+    left: 200px;
+    width: 190px;
+    height: 100px;
+    background: var(--wrapper2-color);
+}
+.circle2 {
+    position: absolute;
+    top: 1860px;
+    left: 200px;
+    width: 150px;
+    height: 150px;
+    background: var(--wrapper2-color);
+}
+.circle3 {
+    position: absolute;
+    top: 1650px;
+    left: 160px;
+    width: 190px;
+    height: 400px;
+    transition: width .3s, height .3s, opacity .3s, background-color .3s;{
+    width: 230px;
+    opacity: 1;
+    background-color:#ffffff69;
+}
+
+/* 激光 biu（从 circle2 右侧射出） */
+.biu {
+    position: absolute;
+    top: calc(1860px + 75px - 4px); /* circle2中心 Y (1860 + 150/2) - 半高 */
+    left: calc(200px + 150px);      /* circle2 右边缘 (left + width) */
+    width: 140px;
+    height: 5px;
+    background: linear-gradient(90deg,#fffcc0 0%, #ffe600 20%, #ffb300 60%, #fff27a 100%);
+    border-radius: 4px;
+    opacity: 0;
+    transform-origin: left center;
+    pointer-events: none;
+    will-change: transform, opacity;
+    filter: saturate(150%);
+}
+
+/* 前端高亮 */
+.biu::after {
+    content: "";
+    position: absolute;
+    right: -12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 18px;
+    height: 18px;
+    background: radial-gradient(circle,#ffffff 10%, #ffe766 45%, rgba(255,230,0,0) 70%);
+    border-radius: 50%;
+    box-shadow:
+        0 0 10px 4px #ffe766,
+        0 0 22px 8px #ffd500;
+}
+
+/* 动画 */
+@keyframes biu-shoot {
+    0%   { transform: translateX(0) scaleX(.05); opacity: 0; }
+    5%   { opacity: 1; }
+    70%  { opacity: 1; }
+    100% { transform: translateX(800px) scaleX(1); opacity: 0; }
+}
+
+/* 触发：hover 到 circle3 时发射 */
+.circle3:hover ~ .biu,
+.circle3:hover + .biu {
+    animation: biu-shoot 1s linear;
+}
+
+/* 再次触发（移出再进入重新播放） */
+.circle3:not(:hover) ~ .biu,
+.circle3:not(:hover) + .biu {
+    animation: none;
+    opacity: 0;
+}
+
+/* 减少动态偏好 */
+@media (prefers-reduced-motion: reduce) {
+    .circle3:hover ~ .biu,
+    .circle3:hover + .biu {
+        animation: none;
+        opacity: 1;
+        width: 260px;
+        transform: none;
+    }
+}
+
+
+/* wrapper3公共外观 */
+.wrapper3{
+top:80px;
+}
+ 
+.circle4 {
+    position: absolute;
+    top: 1045px;
+    left: 155px;
+    width: 150px;
+    height: 150px;
+    border: 4px double rgb(0, 81, 255);
+    border-radius: 50%;
+    background: radial-gradient(circle at center,
+        hsl(0 0% 10%) 0%,
+        hsl(0 0% 20%) 30%,
+        hsl(0 0% 25%) 50%,
+        hsl(0 0% 40%) 65%,
+        hsl(0 0% 50%) 100%);
+    overflow: hidden;
+    cursor: pointer;
+    transition: filter .5s, transform .8s;
+}
+
+/* 漩涡层 */
+.circle4::before,
+.circle4::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    mix-blend-mode: screen;
+    pointer-events: none;
+    opacity: 0;
+    transform: scale(.25) rotate(0deg);
+    transition: opacity .5s ease, transform 1s ease;
+}
+
+/* 外层螺旋 */
+.circle4::before {
+    background:
+        repeating-conic-gradient(
+            from 0deg,
+            rgba(0,255,160,.85) 0deg 10deg,
+            rgba(0,140,255,.05) 10deg 20deg
+        );
+    mask:
+        radial-gradient(circle at center,
+            transparent 0 18%,
+            #000 58%,
+            transparent 74%);
+    filter: blur(2px);
+}
+
+/* 内层紧密漩涡 */
+.circle4::after {
+    background:
+        repeating-conic-gradient(
+            from 35deg,
+            rgba(0,180,255,.85) 0deg 7deg,
+            rgba(0,255,140,.05) 7deg 14deg
+        );
+    mask:
+        radial-gradient(circle at center,
+            transparent 0 8%,
+            #000 48%,
+            transparent 62%);
+    filter: blur(1px);
+}
+
+/* 悬停效果 */
+.circle4:hover {
+    transform: scale(1.06);
+    filter: brightness(1.18);
+}
+
+.circle4:hover::before,
+.circle4:hover::after {
+    opacity: 1;
+    transform: scale(1.06) rotate(360deg);
+    animation: circle4-spin 1.3s linear infinite;
+}
+
+.circle4:hover::after {
+    animation: circle4-spin-fast 1s linear infinite;
+}
+
+/* 动画 */
+@keyframes circle4-spin {
+    to { transform: scale(1.06) rotate(720deg); }
+}
+@keyframes circle4-spin-fast {
+    to { transform: scale(1.06) rotate(1080deg); }
+}
+
+
+.circle6 {
+    position: absolute;
+    top: 1200px;
+    left: 155px;
+    width: 200px;
+    height: 200px;
+    border: 4px double rgb(0, 81, 255);
+    border-radius: 50%;
+    background: radial-gradient(circle at center,
+        hsl(0 0% 10%) 0%,
+        hsl(0 0% 20%) 30%,
+        hsl(0 0% 25%) 50%,
+        hsl(0 0% 40%) 65%,
+        hsl(0 0% 50%) 100%);
+    position: absolute;
+    overflow: hidden;
+    cursor: pointer;
+    transition: filter .5s, transform .8s;
+}
+
+/* 漩涡层（伪元素） */
+.circle6::before,
+.circle6::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    mix-blend-mode: screen;
+    pointer-events: none;
+    opacity: 0;
+    transform: scale(.2) rotate(0deg);
+    transition: opacity .5s ease, transform 1s ease;
+}
+
+/* 多臂螺旋（外层） */
+.circle6::before {
+    background:
+        repeating-conic-gradient(
+            from 0deg,
+            rgba(0,255,160,.9) 0deg 12deg,
+            rgba(0,140,255,.05) 12deg 24deg
+        );
+    mask:
+        radial-gradient(circle at center,
+            transparent 0 15%,
+            #000 55%,
+            transparent 72%);
+    filter: blur(2px);
+}
+
+/* 紧密中心涡心（内层） */
+.circle6::after {
+    background:
+        repeating-conic-gradient(
+            from 45deg,
+            rgba(0,180,255,.85) 0deg 8deg,
+            rgba(0,255,140,.05) 8deg 16deg
+        );
+    mask:
+        radial-gradient(circle at center,
+            transparent 0 5%,
+            #000 45%,
+            transparent 60%);
+    filter: blur(1px);
+}
+
+/* 悬停时激活动画 */
+.circle6:hover {
+    transform: scale(1.05);
+    filter: brightness(1.15);
+}
+
+.circle6:hover::before,
+.circle6:hover::after {
+    opacity: 1;
+    transform: scale(1.05) rotate(360deg);
+    animation: swirl-spin 1.2s linear infinite;
+}
+
+/* 不同层转速差，制造漩涡纵深 */
+.circle6:hover::after {
+    animation: swirl-spin-fast .9s linear infinite;
+}
+
+@keyframes swirl-spin {
+    to { transform: scale(1.05) rotate(720deg); }
+}
+@keyframes swirl-spin-fast {
+    to { transform: scale(1.05) rotate(1080deg); }
+}
+
+
+
+.rect1 {
+    position: absolute;
+    top: 1020px;
+    left: 150px;
+    width: 20px;
+    height: 380px;
+    border: 4px double rgb(0, 81, 255);
+    border-radius: 16px;
+    z-index: 10; /* 确保不被其它元素遮住，可按需要调整 */
+    transition: background-color .3s ease-in .2s;
+}
+
+.vert4,
+.vert5 {
+    border-radius: 16px;
+    background: var(--wrapper2-color);
+}
+.vert4 {
+    position: absolute;
+    top: 1000px;
+    left: 400px;
+    width: 10px;
+    height: 400px;
+
+    background-color: var(--wrapper3-color);
+}
+/* 如果想用渐变，可改：
+.vert1 { background: linear-gradient(160deg,#7b6cf6,#4a90e2); }
+.par2  { background: linear-gradient(90deg,#ff8a34,#ffc06a); }
+*/
+/* wrapper4 */
+.semicircle {
+    position: absolute;
+    width: 100px;
+    height: 50px;
+    border: 20px ridge #f88a62d8;
+    border-top: none;
+    border-bottom-left-radius: 80px;
+    border-bottom-right-radius: 100px;
+    position: absolute;
+    top: 800px;
+    left: 92px;
+    rotate: -8deg;
+}
+div {
+    display: block;
+    unicode-bidi: isolate;
+}
+.rect2 {
+    width: 20px;
+    height: 210px;
+   background-color: #f88a62f4;
+    position: absolute;
+    left: 192px;
+    top: 590px;
+    rotate: -8deg;
+    border-radius: 5px
+}
+.rect3 {
+    width: 72px;
+    height: 18px;
+    position: absolute;
+    left: 190px;
+    top: 593px;
+    rotate: 4deg;
+    border: 10px double #f88a62f4;
+    background: transparent;
+    border-radius: 5px;
+}
+.rect4 {
+    width:15px;
+    height: 90px;
+   background-color: #f88a62f4;
+    position: absolute;
+    left: 262px;
+    top: 597px;
+    rotate: -8deg;
+    border-radius: 5px
+}
+ .semicircle2 {
+    width: 100px;
+    height: 50px;
+    border: 10px double #f88a62f4;
+    border-top: none;
+    border-bottom-left-radius: 70px;
+    border-bottom-right-radius: 100px;
+    position: absolute;
+    top: 760px;
+    left: 210px;
+}
+
+.circle5 {
+    position: absolute;
+    top: 670px;
+    left: 270px;
+    width: 30px;
+    height: 90px;
+    border: 8px solid #f88a62f4;
+    border-bottom-left-radius: 70px;
+    border-bottom-right-radius: 100px;
+    background: #a3583d;
+    transform: rotate(-55deg);
+    cursor: pointer;
+    transition: opacity .3s, transform .3s, width .3s, height .3s, background-color .3s;
+}
+
+.circle5:hover {
+    background: #f88a62f4;
+
+    transform: rotate(-60deg) scale(1.05);
+}
+.point {
+    position: absolute;
+    top: 750px;
+    left: 120px;
+    width: 18px;
+    height: 18px;
+    background: #a3583d;
+    border: 4px double #f3865f;
+    border-radius: 10%;
+    rotate: 30deg;
+    box-shadow: 0 0 6px rgba(0,0,0,.25);
+}
+.point:hover {
+    transform: scale(1.25);
+    transition: .25s;
+    transform: rotate(-30deg);
+}
+div {
+    display: block;
+    unicode-bidi: isolate;
+}
+/* wrapper5公共外观 */
+
+.circle7 {
+    position: absolute;
+    top: 2100px;
+    left: 0;
+    width: 300px;
+    height: 270px;
+    transform: scale(1);
+}
+
+.circle7::before,
+.circle7::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 150px;
+    height: 240px;
+    background: #ff4d6d; /* fallback */
+    background: linear-gradient(to bottom, hsl(339, 91%, 91%) 0%, #ffc1d9 20%, #ff9bbf 45%, #ff6f9f 68%, #ff4d6d 100%);
+    border-radius: 50px 50px 0 0;
+}
+
+.circle7::before {
+    left: 150px;
+    transform: rotate(90deg);
+    transform-origin: 0 100%;
+}
+
+.circle7::after {
+    left: 0;
+    transform: rotate(90deg);
+    transform-origin: 100% 100%;
+}
+
+/* 等比例缩小版本 */
+.circle8 {
+    position: absolute;
+    top: 125px;
+    left: 110px;
+    width: 170px;      /* 300 * 0.5 */
+    height: 135px;     /* 270 * 0.5 */
+    transform: scale(1);
+    z-index:100;
+}
+
+.circle8::before,
+.circle8::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 100px;       /* 150 * 0.5 */
+    height: 120px;     /* 240 * 0.5 */
+    background: #272727;
+    border-radius: 25px 25px 0 0; /* 50px * 0.5 */
+}
+
+.circle8::before {
+    left: 100px;        /* 150 * 0.5 */
+    transform: rotate(90deg);
+    transform-origin: 0 100%;
+}
+
+.circle8::after {
+    left: 0;
+    transform: rotate(90deg);
+    transform-origin: 100% 100%;
+
+
+
+/* 方块容器 */
+.wrapper1 {
+    display: flex;
+    gap: 16px;
+    padding: 24px;
+}
+
+/* 公共方块样式 */
+.wrapper1 .box {
+    width: 120px;
+    height: 120px;
+    background: #4ae26d;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font: 14px/1.2 sans-serif;
+    color: #fff;
+    box-shadow: 0 2px 6px rgba(0,0,0,.15);
+    border-radius: 8px;
+}
+
+
+
+/* 第三个不同色 */
+.wrapper1 .box:nth-child(3) {
+    background: #ff8a34;
+}
+
+#triangle-bottomright {
+      width: 0;
+      height: 0;
+      border-bottom: 100px solid red;
+      border-left: 100px solid transparent;
+    } */
+
+.handmade{
+    top:2500px;
+    left: 50px;
+    color: #fff;
+    position: absolute;
+}
