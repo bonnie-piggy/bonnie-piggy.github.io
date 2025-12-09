@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Visual Pattern</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: #1a1a2e;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+        canvas {
+            display: block;
+            border-radius: 8px;
+        }
+        .info {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            color: white;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-size: 14px;
+            max-width: 300px;
+        }
+    </style>
+</head>
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.11/lib/p5.min.js"></script>
+    <script>
+        let colorSchemes = [
+            { bg: [26, 26, 46], colors: [[231, 76, 60], [241, 196, 15], [46, 204, 113], [52, 152, 219]] },
+            { bg: [44, 62, 80], colors: [[230, 126, 34], [155, 89, 182], [52, 73, 94], [241, 196, 15]] },
+            { bg: [85, 37, 130], colors: [[253, 121, 168], [119, 221, 119], [253, 203, 110], [69, 177, 232]] }
+        ];
+        let currentScheme = 0;
+        let shapes = [];
+        let gridSize = 12;
+
+        function setup() {
+            createCanvas(windowWidth, windowHeight);
+            generateShapes();
+        }
+
+        function draw() {
+            background(colorSchemes[currentScheme].bg);
+            
+            // Use nested loops to create a grid pattern
+            for (let i = 0; i < gridSize; i++) {
+                for (let j = 0; j < gridSize; j++) {
+                    let x = (width / gridSize) * i;
+                    let y = (height / gridSize) * j;
+                    
+                    // Calculate distance from mouse
+                    let d = dist(mouseX, mouseY, x + width/(gridSize*2), y + height/(gridSize*2));
+                    
+                    // Use conditional to determine shape properties based on position and mouse
+                    let size = map(d, 0, width/2, 30, 5);
+                    
+                    // Alternate colors based on position using condition
+                    let colorIndex;
+                    if ((i + j) % 3 === 0) {
+                        colorIndex = 0;
+                    } else if ((i + j) % 3 === 1) {
+                        colorIndex = 1;
+                    } else {
+                        colorIndex = 2;
+                    }
+                    
+                    // Use condition to change shape based on mouse position
+                    let shapeType;
+                    if (d < 150) {
+                        shapeType = 'circle';
+                        fill(colorSchemes[currentScheme].colors[colorIndex]);
+                        noStroke();
+                        ellipse(x + width/(gridSize*2), y + height/(gridSize*2), size, size);
+                    } else {
+                        shapeType = 'square';
+                        fill(colorSchemes[currentScheme].colors[colorIndex]);
+                        noStroke();
+                        rectMode(CENTER);
+                        rect(x + width/(gridSize*2), y + height/(gridSize*2), size, size);
+                    }
+                }
+            }
+        }
+
+        function generateShapes() {
+            shapes = [];
+            // Use loop to generate random shapes
+            for (let i = 0; i < 20; i++) {
+                shapes.push({
+                    x: random(width),
+                    y: random(height),
+                    size: random(20, 60)
+                });
+            }
+        }
+
+
+    </script>
+</body>
+</html>

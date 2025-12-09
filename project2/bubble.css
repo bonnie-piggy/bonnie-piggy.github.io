@@ -1,0 +1,16 @@
+.state-intense {
+  --bubble-color: #475cff;
+  --background-pulse: pulse 2s infinite;
+  --particle-effect: sparkle;
+}
+
+.state-frantic {
+  --bubble-color: #386aff;
+  --background-pulse: pulse 0.5s infinite;
+  --bubble-spawn-rate: 200ms;
+}
+
+@keyframes pulse {
+  0%, 100% { background-color: var(--bg-primary); }
+  50% { background-color: var(--bg-secondary); }
+}

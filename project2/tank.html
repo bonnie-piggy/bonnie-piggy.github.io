@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bubbles</title>
+    <link rel="stylesheet" href="tank.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="header" style="background-color: #F0F3FF;">
+    <h1>Fish tank - Count Bubbles</h1>
+</div>
+    <div class="container">
+        <div class="bubble-container" id="bubble-container">
+            <!-- 水族箱装饰 -->
+            <div class="aqua">
+                <!-- 水族箱装饰物 -->
+                <div class="aquarium-decoration seaweed seaweed-1"></div>
+                <div class="aquarium-decoration seaweed seaweed-2"></div>
+                <div class="aquarium-decoration seaweed seaweed-3"></div>
+                <div class="aquarium-decoration seaweed seaweed-4"></div>
+                
+                <div class="aquarium-decoration rock rock-1"></div>
+                <div class="aquarium-decoration rock rock-2"></div>
+                
+                <!-- JS交互小鱼 -->
+                <div id="fish-js" class="fish-js">
+                    <div class="fish-body-js">
+                        <div class="body"></div>
+                        <div class="tail"></div>
+                        <div class="fin"></div>
+                        <div class="eye">
+                            <div class="eye-inner"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 气泡泵按钮 -->
+                <button id="pump"><img src="pump.svg" alt="air pump"></button>
+                <!-- 气泡将在这里生成 -->
+            </div>
+        </div>
+    </div>
+    
+    <div style="display: flex; height: 12%; position: absolute; bottom: 0; left: 0; right: 0">
+        <div class="stats-container">
+            <h2>INSTRUCTIONS</h2>
+            <p>
+                Click the air pump to add bubbles.<br> 
+                Click bubbles to pop them or make them nearly transparent.<br> 
+                If there are too few or too many bubbles, the tank will reset automatically.
+            </p>
+            
+            <div class="controls" >
+                <h2>Existing Bubbles</h2>
+                <div class="stat-value" id="current-bubbles">0</div>
+            </div>        
+            <button id="reset-btn">reset</button>
+        </div>
+    </div>
+    
+    <script>
+        // 配置变量
+        const CONFIG = {
+            // 气泡大小范围
+            minSize: 30,
+            maxSize: 80,
+            // 气泡颜色
+            colors: [
+                'rgba(79, 209, 197, 0.7)',   // 青色
+                'rgba(56, 178, 172, 0.7)',   // 蓝绿色
+                'rgba(49, 151, 149, 0.7)',   // 深蓝绿色
+                'rgba(129, 230, 217, 0.7)',  // 浅青色
+                'rgba(102, 217, 232, 0.7)',  // 天蓝色
+                'rgba(116, 250, 213, 0.7)'   // 薄荷绿
+            ],
+            // 气泡浮动速度范围
+            minFloatSpeed: 20,
+            maxFloatSpeed: 50,
+            // 气泡透明度变化范围
+            minOpacity: 0.5,
+            maxOpacity: 0.8,
+            // 气泡透明度变化速度
+            opacityChangeSpeed: 0.5,
+            // 自动重置阈值
+            minBubblesThreshold: 2,
+            maxBubblesThreshold: 20,
+            
+            // 小鱼配置 - 固定值
+            fishSpeed: 4, // 游动速度固定为4
+            fishSize: 0.8, // 大小固定为80%
+            fishWidth: 120,
+            fishHeight: 60
+        };
+        
+        // 状态变量
+        let state = {
+            totalBubbles: 0,
+            currentBubbles: 0,
+            poppedBubbles: 0,
+            clickCount: 0,
+            bubbleElements: [],
+            
+            // 小鱼状态
+            fish: null,
+            animationId: null,
+            fishDirectionChanges: 0,
+            autoResetEnabled: true,
+            resetInProgress: false
+        };
+        
+        // DOM 元素
+        const bubbleContainer = document.getElementById('bubble-container');
+        const currentBubblesEl = document.getElementById('current-bubbles');
+        const addBubblesBtn = document.getElementById('pump');
+        const resetBtn = document.getElementById('reset-btn');
+        const fishElement = document.getElementById('fish-js');
+        
+        // 初始化
+        function init() {
+            // 添加初始气泡
+            addRandomBubbles();
+            
+            // 初始化小鱼
+            initFish();
+            
+            // 事件监听器
+            addBubblesBtn.addEventListener('click', addRandomBubbles);
+            resetBtn.addEventListener('click', resetGame);
+            
+            // 开始气泡动画循环
+            requestAnimationFrame(animateBubbles);
+            
+            // 开始小鱼动画循环
+            animateFish();
+        }
+        
+        // 初始化小鱼
+        function initFish() {
+            // 获取容器尺寸
+            const containerWidth = bubbleContainer.clientWidth;
+            const containerHeight = bubbleContainer.clientHeight;
+            
+            // 小鱼初始位置设为水族箱中心
+            const startX = containerWidth / 2 - CONFIG.fishWidth * CONFIG.fishSize / 2;
+            const startY = containerHeight / 2 - CONFIG.fishHeight * CONFIG.fishSize / 2;
+            
+            // 创建小鱼对象
+            state.fish = {
+                element: fishElement,
+                x: startX,
+                y: startY,
+                speed: CONFIG.fishSpeed, // 固定速度
+                direction: Math.random() * Math.PI * 2, // 随机初始方向
+                size: CONFIG.fishSize, // 固定大小
+                tailAnimation: 0,
+                containerWidth: containerWidth,
+                containerHeight: containerHeight
+            };
+            
+            // 初始更新小鱼元素
+            updateFishElement(state.fish);
+        }
+        
+        // 更新小鱼元素
+        function updateFishElement(fish) {
+            const element = fish.element;
+            
+            // 更新位置
+            element.style.left = `${fish.x}px`;
+            element.style.top = `${fish.y}px`;
+            
+            // 更新大小和方向
+            const scale = fish.size;
+            // 根据方向决定是否水平翻转（向左游时翻转）
+            const flip = fish.direction > Math.PI/2 && fish.direction < Math.PI*3/2 ? 'scaleX(-1)' : 'scaleX(1)';
+            element.style.transform = `scale(${scale}) ${flip}`;
+            
+            // 更新尾巴动画
+            const tailElement = element.querySelector('.tail');
+            if (tailElement) {
+                const tailScale = 0.9 + 0.2 * Math.sin(fish.tailAnimation);
+                tailElement.style.transform = `scaleY(${tailScale})`;
+            }
+        }
+        
+        // 小鱼动画循环
+        function animateFish() {
+            if (!state.fish) return;
+            
+            // 更新小鱼尾巴动画
+            state.fish.tailAnimation += 0.3;
+            
+            // 随机改变方向（每帧有1%的概率改变方向）
+            if (Math.random() < 0.01) {
+                state.fish.direction += (Math.random() - 0.5) * Math.PI;
+                state.fishDirectionChanges++;
+            }
+            
+            // 计算新位置
+            state.fish.x += Math.cos(state.fish.direction) * state.fish.speed;
+            state.fish.y += Math.sin(state.fish.direction) * state.fish.speed;
+            
+            // 边界检查
+            const fishWidth = CONFIG.fishWidth * state.fish.size;
+            const fishHeight = CONFIG.fishHeight * state.fish.size;
+            
+            // 左边界
+            if (state.fish.x < 0) {
+                state.fish.x = 0;
+                state.fish.direction = Math.PI - state.fish.direction;
+                state.fishDirectionChanges++;
+            } 
+            // 右边界
+            else if (state.fish.x > state.fish.containerWidth - fishWidth) {
+                state.fish.x = state.fish.containerWidth - fishWidth;
+                state.fish.direction = Math.PI - state.fish.direction;
+                state.fishDirectionChanges++;
+            }
+            
+            // 上边界
+            if (state.fish.y < 0) {
+                state.fish.y = 0;
+                state.fish.direction = -state.fish.direction;
+                state.fishDirectionChanges++;
+            } 
+            // 下边界
+            else if (state.fish.y > state.fish.containerHeight - fishHeight) {
+                state.fish.y = state.fish.containerHeight - fishHeight;
+                state.fish.direction = -state.fish.direction;
+                state.fishDirectionChanges++;
+            }
+            
+            // 更新小鱼元素
+            updateFishElement(state.fish);
+            
+            // 继续动画循环
+            state.animationId = requestAnimationFrame(animateFish);
+        }
+        
+        // 添加随机数量的气泡
+        function addRandomBubbles() {
+            // 随机生成1-10个气泡
+            const bubbleCount = Math.floor(Math.random() * 10) + 1;
+            
+            for (let i = 0; i < bubbleCount; i++) {
+                createBubble();
+            }
+            
+            // 更新统计
+            updateStats();
+        }
+        
+        // 创建单个气泡
+        function createBubble() {
+            // 创建气泡元素
+            const bubble = document.createElement('div');
+            bubble.className = 'bubble';
+            
+            // 随机大小
+            const size = Math.floor(Math.random() * (CONFIG.maxSize - CONFIG.minSize)) + CONFIG.minSize;
+            
+            // 随机位置（确保气泡完全在容器内）
+            const containerWidth = bubbleContainer.clientWidth;
+            const containerHeight = bubbleContainer.clientHeight;
+            const left = Math.random() * (containerWidth - size * 2) + size;
+            const top = Math.random() * (containerHeight - size * 2) + size;
+            
+            // 随机颜色
+            const color = CONFIG.colors[Math.floor(Math.random() * CONFIG.colors.length)];
+            
+            // 设置气泡样式
+            bubble.style.width = `${size}px`;
+            bubble.style.height = `${size}px`;
+            bubble.style.left = `${left}px`;
+            bubble.style.top = `${top}px`;
+            bubble.style.background = color;
+            
+            // 随机浮动速度（较快的值）
+            const floatSpeed = Math.random() * (CONFIG.maxFloatSpeed - CONFIG.minFloatSpeed) + CONFIG.minFloatSpeed;
+            bubble.style.animation = `float ${floatSpeed}s infinite ease-in-out, pulse ${floatSpeed * 200}s infinite ease-in-out`;
+            
+            // 初始透明度
+            const initialOpacity = Math.random() * (CONFIG.maxOpacity - CONFIG.minOpacity) + CONFIG.minOpacity;
+            bubble.style.opacity = initialOpacity;
+            
+            // 添加浮动动画
+            bubble.style.animation = `float ${floatSpeed}s infinite ease-in-out, pulse ${floatSpeed * 2}s infinite ease-in-out`;
+            
+            // 添加点击事件
+            bubble.addEventListener('click', handleBubbleClick);
+            
+            // 添加到容器和状态
+            bubbleContainer.appendChild(bubble);
+            state.bubbleElements.push({
+                element: bubble,
+                opacityDirection: Math.random() > 0.5 ? 1 : -1, // 1表示增加，-1表示减少
+                currentOpacity: initialOpacity
+            });
+            
+            // 更新计数
+            state.totalBubbles++;
+            state.currentBubbles++;
+        }
+        
+        // 处理气泡点击
+        function handleBubbleClick(event) {
+            const bubble = event.target;
+            state.clickCount++;
+            
+            // 50%几率气泡消失，50%几率气泡变得几乎透明
+            if (Math.random() > 0.75) {
+                // 气泡消失
+                bubble.style.transition = 'opacity 0.3s ease';
+                bubble.style.opacity = '0';
+                
+                // 从状态中移除
+                setTimeout(() => {
+                    if (bubble.parentNode) {
+                        bubble.parentNode.removeChild(bubble);
+                        state.currentBubbles--;
+                        state.poppedBubbles++;
+                        updateStats();
+                        
+                        // 从状态数组中移除
+                        state.bubbleElements = state.bubbleElements.filter(b => b.element !== bubble);
+                    }
+                }, 300);
+            } else {
+                // 气泡变得几乎透明
+                bubble.style.transition = 'opacity 0.4s ease';
+                bubble.style.opacity = '0.3';
+                
+                // 更新状态中的当前透明度
+                const bubbleState = state.bubbleElements.find(b => b.element === bubble);
+                if (bubbleState) {
+                    bubbleState.currentOpacity = 0.3;
+                }
+            }
+            
+            // 更新统计
+            updateStats();
+        }
+        
+        // 气泡动画循环
+        function animateBubbles() {
+            state.bubbleElements.forEach(bubbleState => {
+                const bubble = bubbleState.element;
+                
+                // 更新透明度
+                bubbleState.currentOpacity += CONFIG.opacityChangeSpeed * bubbleState.opacityDirection;
+                
+                // 检查边界
+                if (bubbleState.currentOpacity >= CONFIG.maxOpacity) {
+                    bubbleState.currentOpacity = CONFIG.maxOpacity;
+                    bubbleState.opacityDirection = -1; // 开始减少
+                } else if (bubbleState.currentOpacity <= CONFIG.minOpacity) {
+                    bubbleState.currentOpacity = CONFIG.minOpacity;
+                    bubbleState.opacityDirection = 1; // 开始增加
+                }
+                
+                // 应用透明度（如果气泡没有被点击过）
+                if (parseFloat(bubble.style.opacity) > 0.1) {
+                    bubble.style.opacity = bubbleState.currentOpacity;
+                }
+            });
+            
+            // 继续动画循环
+            requestAnimationFrame(animateBubbles);
+        }
+        
+        // 检查并自动重置
+        function checkAndAutoReset() {
+            if (!state.autoResetEnabled || state.resetInProgress) return;
+            
+            // 检查气泡数量是否超出阈值
+            if (state.currentBubbles < CONFIG.minBubblesThreshold || 
+                state.currentBubbles > CONFIG.maxBubblesThreshold) {
+                
+                state.resetInProgress = true;
+                
+                // 显示提示
+                let reason = '';
+                if (state.currentBubbles < CONFIG.minBubblesThreshold) {
+                    reason = `气泡太少（${state.currentBubbles} < ${CONFIG.minBubblesThreshold}）`;
+                } else {
+                    reason = `气泡太多（${state.currentBubbles} > ${CONFIG.maxBubblesThreshold}）`;
+                }
+                
+                // 延迟执行重置，让用户看到提示
+                setTimeout(() => {
+                    autoReset();
+                    state.resetInProgress = false;
+                }, 1500);
+            }
+        }
+        
+        // 自动重置
+        function autoReset() {
+            // 移除所有气泡
+            removeAllBubbles();
+            
+            // 重置状态（但保留总统计）
+            state.currentBubbles = 0;
+            state.bubbleElements = [];
+            
+            // 添加初始气泡
+            const resetCount = Math.floor((CONFIG.minBubblesThreshold + CONFIG.maxBubblesThreshold) / 2);
+            for (let i = 0; i < resetCount; i++) {
+                createBubble();
+            }
+            updateStats();
+        }
+        
+        // 移除所有气泡
+        function removeAllBubbles() {
+            // 为所有气泡添加消失动画
+            state.bubbleElements.forEach(bubbleState => {
+                const bubble = bubbleState.element;
+                bubble.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                bubble.style.opacity = '0';
+                bubble.style.transform = 'scale(0)';
+            });
+            
+            // 延迟后移除所有气泡
+            setTimeout(() => {
+                while (bubbleContainer.firstChild) {
+                    bubbleContainer.removeChild(bubbleContainer.firstChild);
+                }
+            }, 500);
+        }
+        
+        // 更新统计显示
+        function updateStats() {
+            currentBubblesEl.textContent = state.currentBubbles;
+        }
+        
+        // 重置游戏
+        function resetGame() {
+            // 移除所有气泡
+            while (bubbleContainer.firstChild) {
+                bubbleContainer.removeChild(bubbleContainer.firstChild);
+            }
+            
+            // 重置状态
+            state = {
+                totalBubbles: 0,
+                currentBubbles: 0,
+                poppedBubbles: 0,
+                clickCount: 0,
+                bubbleElements: [],
+                // 保留小鱼状态
+                fish: state.fish,
+                animationId: state.animationId,
+                fishDirectionChanges: state.fishDirectionChanges,
+                autoResetEnabled: state.autoResetEnabled,
+                resetInProgress: false
+            };
+            
+            // 重新初始化小鱼位置
+            if (state.fish) {
+                const containerWidth = bubbleContainer.clientWidth;
+                const containerHeight = bubbleContainer.clientHeight;
+                state.fish.x = containerWidth / 2 - CONFIG.fishWidth * CONFIG.fishSize / 2;
+                state.fish.y = containerHeight / 2 - CONFIG.fishHeight * CONFIG.fishSize / 2;
+                state.fish.direction = Math.random() * Math.PI * 2;
+                state.fish.containerWidth = containerWidth;
+                state.fish.containerHeight = containerHeight;
+                updateFishElement(state.fish);
+            }
+            
+            // 更新统计
+            updateStats();
+            
+            // 添加新的气泡
+            addRandomBubbles();
+        }
+        
+        // 页面加载完成后初始化
+        window.addEventListener('load', init);
+    </script>
+</body>
+</html>
