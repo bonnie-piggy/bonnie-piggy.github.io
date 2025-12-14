@@ -569,7 +569,7 @@ div {
 .circle8::after {
     content: "";
     position: absolute;
-    top: 0;
+    top: 2100px;
     width: 100px;       /* 150 * 0.5 */
     height: 120px;     /* 240 * 0.5 */
     background: #272727;
@@ -623,10 +623,3 @@ div {
       border-bottom: 100px solid red;
       border-left: 100px solid transparent;
     } */
-
-.handmade{
-    top:2500px;
-    left: 50px;
-    color: #fff;
-    position: absolute;
-}

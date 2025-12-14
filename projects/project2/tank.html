@@ -8,6 +8,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Afacad+Flux:wght@100..1000&family=Comfortaa:wght@300..700&display=swap" rel="stylesheet">
 </head>
 <body>
 <div class="header" style="background-color: #F0F3FF;">
@@ -81,10 +84,10 @@
             minFloatSpeed: 20,
             maxFloatSpeed: 50,
             // 气泡透明度变化范围
-            minOpacity: 0.6,
-            maxOpacity: 0.9,
+            minOpacity: 0.5,
+            maxOpacity: 0.8,
             // 气泡透明度变化速度
-            opacityChangeSpeed: 1,
+            opacityChangeSpeed: 0.5,
             // 自动重置阈值
             minBubblesThreshold: 2,
             maxBubblesThreshold: 20,
@@ -312,7 +315,7 @@
             state.clickCount++;
             
             // 50%几率气泡消失，50%几率气泡变得几乎透明
-            if (Math.random() > 0.5) {
+            if (Math.random() > 0.75) {
                 // 气泡消失
                 bubble.style.transition = 'opacity 0.3s ease';
                 bubble.style.opacity = '0';
@@ -331,13 +334,13 @@
                 }, 300);
             } else {
                 // 气泡变得几乎透明
-                bubble.style.transition = 'opacity 0.2s ease';
-                bubble.style.opacity = '0.1';
+                bubble.style.transition = 'opacity 0.4s ease';
+                bubble.style.opacity = '0.3';
                 
                 // 更新状态中的当前透明度
                 const bubbleState = state.bubbleElements.find(b => b.element === bubble);
                 if (bubbleState) {
-                    bubbleState.currentOpacity = 0.1;
+                    bubbleState.currentOpacity = 0.3;
                 }
             }
             
